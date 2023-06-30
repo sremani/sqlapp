@@ -1,25 +1,18 @@
 ﻿using System.Data.SqlClient;
 using sqlapp.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace sqlapp.Services
 {
     public class ProductService
     {
-        private static string db_source = "proofofdata.database.windows.net";
-        private static string db_user = "sremani";
-        private static string db_password = "2600$unTr33Lane";
-        private static string db_database = "proofofdata";
-
-
         private SqlConnection GetConnection()
         {
-            var _builder = new SqlConnectionStringBuilder();
-            _builder.DataSource = db_source;
-            _builder.UserID = db_user;
-            _builder.Password = db_password;
-            _builder.InitialCatalog = db_database;
+            var _config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-            return new SqlConnection(_builder.ConnectionString);
+            return new SqlConnection(_config.GetConnectionString("SQLConnection"));
         }
 
         public IEnumerable<Product> GetProducts()
