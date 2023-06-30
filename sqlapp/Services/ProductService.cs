@@ -4,15 +4,17 @@ using Microsoft.Extensions.Configuration;
 
 namespace sqlapp.Services
 {
-    public class ProductService
+    public class ProductService : IProductService
     {
+        private readonly IConfiguration _configuration;
+
+        public ProductService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         private SqlConnection GetConnection()
         {
-            var _config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            return new SqlConnection(_config.GetConnectionString("SQLConnection"));
+            return new SqlConnection(_configuration.GetConnectionString("SQLConnection"));
         }
 
         public IEnumerable<Product> GetProducts()
