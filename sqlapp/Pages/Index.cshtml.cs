@@ -8,6 +8,7 @@ namespace sqlapp.Pages
     public class IndexModel : PageModel
     {
         public IEnumerable<Product> Products;
+        public bool IsBeta;
 
         private readonly IProductService _productService;
         public IndexModel(IProductService productService)
@@ -15,7 +16,11 @@ namespace sqlapp.Pages
             _productService = productService;
         }
 
-        public void OnGet() => Products = _productService.GetProducts();
+        public void OnGet()
+        {
+            IsBeta = _productService.IsBeta().Result;
+            Products = _productService.GetProducts().GetAwaiter().GetResult();
+        }
         
     }
 }

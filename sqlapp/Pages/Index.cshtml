@@ -5,7 +5,11 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">This is a list of products - testing changes and git commits- version 2</h1>
+    <h1 class="display-4">This is a list of products - testing changes and git commits- using Azure App Configuration Service for SQL connection.</h1>
+    @if (Model.IsBeta)
+    {
+        <h2 class="display-4"> This is a beta version of the application. </h2>
+    }
     <table class="table table-bordered">
         <thead>
             <tr>
